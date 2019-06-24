@@ -34,7 +34,6 @@
         </div>
         <div class="dropdown">
           <div class="dropdown-toggle header__primary--items" data-toggle="dropdown">
-            <img src="./images/search.svg" alt="search" width="24px">
             <span>
               <?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?></span>
             <?php
@@ -86,6 +85,14 @@
 
     <section class="main__section">
       <div class="table__card">
+        <div class="table__title">
+          <h2 class="table__title--h4">Inventory</h2>
+          <div>
+            <a href="javascript:void(0)" class="table__title--a"><img src="./images/search.svg" alt="search"></a>
+            <a href="javascript:void(0)" class="table__title--a"><img src="./images/sort.svg" alt="sort"></a>
+            <a href="javascript:void(0)" class="table__title--a"><img width="24px" src="./images/filter.svg" alt="filter"></a>
+          </div>
+        </div>
         <table class="table__card--table">
           <thead class="table__card--thead">
             <th class="table__card--th">SKU</th>
@@ -99,7 +106,7 @@
             <?php
 
             $sql = $conn->prepare(
-              "SELECT * FROM items WHERE u_id = ?"
+              "SELECT * FROM items"
             );
             $sql->execute(array($u_id));
             $rows = $sql->fetchAll();
@@ -195,7 +202,7 @@
 
                 <tr>
                   <td>
-                    <button type="submit" name="submitEdit" onclick="editItem()" class="btn btn__fullwidth btn__primary">Edit Item</button>
+                    <button type="submit" name="submitEdit" onclick="editItem()" class="btn btn__fullwidth btn__primary">Save Changes</button>
                   </td>
                 </tr>
               </table>

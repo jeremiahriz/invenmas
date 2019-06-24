@@ -1,17 +1,20 @@
 <?php
 include './config.php';
+session_start();
 $conn = OpenCon();
 $id = $_REQUEST['id'];
 $firstname = $_REQUEST['firstname'];
 $lastname = $_REQUEST['lastname'];
-$email = $_REQUEST['email'];
 $role = $_REQUEST['role'];
 try {
-  if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($role)) {
+  if (!empty($firstname) && !empty($lastname) && !empty($role)) {
     $sql = $conn->prepare(
-      "UPDATE users SET firstname = ?, lastname = ?, email = ?, `role`= ? WHERE id = ?"
+      "UPDATE users SET firstname = ?, lastname = ?, `role`= ? WHERE id = ?"
     );
-    $sql->execute(array($firstname, $lastname, $email, $role, $id));
+    $sql->execute(array($firstname, $lastname, $role, $id));
+    $_SESSION['firstname'] = $firstname;
+    $_SESSION['lastname'] = $lastname;
+    $_SESSION['role'] = $role;
   } else {
     echo 'Fill all fields';
   }

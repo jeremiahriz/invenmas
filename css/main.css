@@ -323,7 +323,8 @@ h6,
 }
 
 .table__card--th {
-  padding: 1rem 0
+  padding: 1rem 0;
+  font-size: 12px
 }
 
 .table__card--th:last-child {
@@ -350,6 +351,18 @@ h6,
 .table__card--td .btn__primary {
   margin-left: 5px;
   margin-right: 5px
+}
+
+.table__title {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding-top: .5rem;
+  padding-bottom: 1.5rem;
+}
+
+.table__title--a:not(:last-child) {
+  margin-right: 20px
 }
 
 /* add item */

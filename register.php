@@ -40,7 +40,7 @@
           echo 'User already exists';
         } else {
           $sql = $conn->prepare(
-            "INSERT INTO users(id,firstname,lastname,email,role,password,`image`) VALUES (?,?,?,?,?,?,?)"
+            "INSERT INTO users(id,firstname,lastname,email,`role`,`password`,`image`) VALUES (?,?,?,?,?,?,?)"
           );
           $sql->execute(array(null, $firstname, $lastname, $email, $role, $password, $image));
           $sql = $conn->prepare(

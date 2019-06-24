@@ -4,10 +4,6 @@ $conn = OpenCon();
 $id = $_REQUEST['id'];
 try {
   $sql = $conn->prepare(
-    "DELETE FROM items WHERE `u_id` = ?"
-  );
-  $sql->execute(array($id));
-  $sql = $conn->prepare(
     "DELETE FROM users WHERE `id` = ?"
   );
   $sql->execute(array($id));

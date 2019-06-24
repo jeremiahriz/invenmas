@@ -15,9 +15,9 @@ try {
       "INSERT INTO items (`id`,`u_id`,`name`,`sku`,`quantity`,`tag`,`min_quantity`,`max_quantity`,`date_created`) VALUES (?,?,?,?,?,?,?,?,?)"
     );
     $sql->execute(array(null, $u_id, $name, $_SESSION['sku'], $quantity, $tag, $minValue, $maxValue, date('Y/m/d')));
-    echo true;
+    echo 'success';
   } else {
-    echo false;
+    echo 'fail';
   }
 } catch (PDOException $e) {
   echo $e->getMessage();

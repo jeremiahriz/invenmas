@@ -5,9 +5,9 @@ $conn = OpenCon();
 $id = $_REQUEST['id'];
 try {
   $sql = $conn->prepare(
-    "DELETE FROM users WHERE `id` = ?"
+    "UPDATE users SET `image`=? WHERE `id` = ?"
   );
-  $sql->execute(array($id));
+  $sql->execute(array(null, $id));
   unset($_SESSION['image']);
 } catch (PDOExcetion $e) {
   echo $e->getMessage();

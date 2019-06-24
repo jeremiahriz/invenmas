@@ -28,38 +28,34 @@
   } else {
     $role_index = 3;
   }
+  $firstname = $_SESSION['firstname'];
+  $lastname = $_SESSION['lastname'];
+  $email = $_SESSION['email'];
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
-
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
-    $email = $_POST['email'];
-    $new_role = $_POST['role'];
-    try {
-      if (!empty($firstname) && !empty($lastname) && !empty($email) && !empty($new_role)) {
+    if ($role_index == 1)
+      $new_role = $_POST['role'];
+    else $new_role = $_SESSION['role'];
+    if (!empty($firstname) && !empty($lastname) && !empty($new_role)) {
+      try {
         $sql = $conn->prepare(
-          "UPDATE users SET `firstname` = ?, lastname = ?, email = ?, `role` = ? WHERE `id` = ?"
+          "UPDATE users SET `firstname` = ?, lastname = ?, `role` = ? WHERE `id` = ?"
         );
-        $sql->execute(array($firstname, $lastname, $email, $new_role, $u_id));
-        $sql = $conn->prepare(
-          "SELECT * FROM users WHERE email = ?"
-        );
-        $sql->execute(array($email));
-        while ($row = $sql->fetch()) {
-          $_SESSION["firstname"] = $firstname;
-          $_SESSION["lastname"] = $lastname;
-          $_SESSION["email"] = $email;
-          $_SESSION["role"] = $role;
-          header('Location: settings.php');
-        }
-      } else {
-        echo 'Fill all fields';
+        $sql->execute(array($firstname, $lastname, $new_role, $u_id));
+        $_SESSION["firstname"] = $firstname;
+        $_SESSION["lastname"] = $lastname;
+        $_SESSION["role"] = $new_role;
+        header('Location: settings.php');
+      } catch (PDOException $e) {
+        echo $e->getMessage();
       }
-    } catch (PDOException $e) {
-      echo $e->getMessage();
-    }
 
-    CloseCon($conn);
+      CloseCon($conn);
+    } else {
+      echo 'Fill all fields';
+    }
   }
 
   if (isset($_POST['logout'])) {
@@ -76,7 +72,6 @@
         </div>
         <div class="dropdown">
           <div class="dropdown-toggle header__primary--items" data-toggle="dropdown">
-            <img src="./images/search.svg" alt="search" width="24px">
             <span>
               <?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?></span>
             <?php
@@ -153,15 +148,15 @@
           <h3 class="user__card--title">Admin Profile</h3>
           <hr>
 
-          <form action="" method='POST' enctype="multipart/form-data">
-            <div class="user__row">
-              <section class="user__row--section">
+          <div class="user__row">
+            <section class="user__row--section">
+              <form method='POST'>
                 <table class="user__table">
                   <tr>
                     <td>
                       <div class="form-box">
                         <label for="firstname">First Name</label>
-                        <input type="text" name="firstname" value="<?php echo $_SESSION['firstname']; ?>" placeholder="First Name">
+                        <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="First Name">
                       </div>
                     </td>
                   </tr>
@@ -170,7 +165,7 @@
                     <td>
                       <div class="form-box">
                         <label for="lastname">Last Name</label>
-                        <input type="text" name="lastname" value="<?php echo $_SESSION['lastname']; ?>" placeholder="Last Name">
+                        <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="Last Name">
                       </div>
                     </td>
                   </tr>
@@ -179,7 +174,7 @@
                     <td>
                       <div class="form-box">
                         <label for="email">Email</label>
-                        <input type="email" name="email" value="<?php echo $_SESSION['email']; ?>">
+                        <input type="email" name="email" disabled value="<?php echo $email; ?>">
                       </div>
                     </td>
                   </tr>
@@ -199,38 +194,38 @@
                     </td>
                   </tr>
                 </table>
-              </section>
+                <div class="user__form--submit">
+                  <button name="submit" type="submit" class="btn btn__primary" onclick="alert('Profile updated successfully')">Save Changes</button>
+                </div>
+              </form>
+            </section>
 
-              <section class="user__row--section">
-                <div>
-                  <div class="user__innerdiv">
-                    <?php
-                    if (!empty($_SESSION['image'])) {
-                      echo '<img class="img__avatar" src="data:image/png;base64,' . base64_encode($_SESSION['image']) . '" alt="' . $_SESSION['firstname'] . '" width="100px" height="100px">';
-                    } else {
-                      echo '
-            <img class="img__avatar" src="./images/avatar.png" alt="' . $_SESSION['firstname'] . '" width="100px">';
-                    }
-                    ?>
-                    <div class="user__innerdiv mt-3">
-                      <form id="uploadPicture" enctype="multipart/form-data">
-                        <div class="form__box" style="display: inline-block">
-                          <button type="button" class="btn btn__accent" onclick="showNewUpload()">Upload New Picture</button>
-                          <input type="file" name="dp" id="newUploadInput" style="" accept="image/*"></div>
-                      </form>
-                      <?php echo '<button type="button" class="btn btn__delete" onclick="deleteImage(' . $_SESSION['id'] . ')">Delete</button>'; ?>
-                    </div>
-                  </div>
-                  <div class="user__innerdiv">
-                    <a>Change Password</a>
-                  </div>
-              </section>
 
-            </div>
-            <div class="user__form--submit">
-              <button type="submit" name="submit" class="btn btn__primary">Save Changes</button>
-            </div>
-          </form>
+            <section class="user__row--section">
+              <div>
+                <div class="user__innerdiv">
+                  <?php
+                  if (!empty($_SESSION['image'])) {
+                    echo '<img class="img__avatar" src="data:image/png;base64,' . base64_encode($_SESSION['image']) . '" alt="' . $_SESSION['firstname'] . '" width="100px" height="100px">';
+                  } else {
+                    echo '
+                  <img class="img__avatar" src="./images/avatar.png" alt="' . $_SESSION['firstname'] . '" width="100px">';
+                  }
+                  ?>
+                  <div class="user__innerdiv mt-3">
+                    <form id="uploadPicture" enctype="multipart/form-data">
+                      <div class="form__box position-relative" style="display: inline-block">
+                        <button type="button" class="btn btn__accent" onclick="showNewUpload()">Upload New Picture</button>
+                        <input type="file" name="dp" id="newUploadInput" style="top:0;left:0;padding:0;opacity:0;cursor:pointer" accept="image/*" class="position-absolute"></div>
+                    </form>
+                    <?php if (!empty($_SESSION['image'])) echo '<button type="button" class="btn btn__delete" onclick="deleteImage(' . $_SESSION['id'] . ')">Delete</button>'; ?>
+                  </div>
+                </div>
+                <div class="user__innerdiv">
+                  <a>Change Password</a>
+                </div>
+            </section>
+          </div>
         </div>
       </section>
     </section>

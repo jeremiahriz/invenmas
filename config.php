@@ -6,7 +6,7 @@ function OpenCon()
     $dbpass = "";
     $db = "invenmas";
     try {
-        $conn = new PDO("mysql:host=$dbhost;dbname=$db", $dbuser, $dbpass);
+        $conn = new PDO("mysql:host=$dbhost;dbname=$db;charset = utf8", $dbuser, $dbpass);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
@@ -25,10 +25,10 @@ function getSKU()
     $rand1 = substr(str_shuffle(str_repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 5)), 0, 4);
     $rand2 = substr(str_shuffle(str_repeat("0123456789", 5)), 0, 4);
     $sql = $conn->prepare(
-        "SELECT sku FROM items WHERE u_id = ?"
+        "SELECT sku FROM items"
     );
     $random = $rand1 . $rand2;
-    $sql->execute(array($_SESSION['id']));;
+    $sql->execute();
     while ($row = $sql->fetch()) {
 
         if ($row['sku'] == $random) {

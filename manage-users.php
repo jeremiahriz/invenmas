@@ -65,7 +65,6 @@
         </div>
         <div class="dropdown">
           <div class="dropdown-toggle header__primary--items" data-toggle="dropdown">
-            <img src="./images/search.svg" alt="search" width="24px">
             <span>
               <?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?></span>
             <?php
@@ -170,13 +169,13 @@
                   echo '<td class="table__card--td">' . $row['role'] . '</td>';
                   echo '
                   <td class="table__card--td">
-                    <button class="btn btn__primary--flat" data-toggle="modal" onclick="showEdit(' . $id . ')" data-target="#editUserModal">Edit</button>
+                    <button class="btn btn__primary--flat" data-toggle="modal" onclick="setUser(' . $id . ')" data-target="#editUserModal">Edit</button>
                     <div class="dropdown">
                       <a class="dropdown-toggle" data-toggle="dropdown">
                         <img src="./images/menu.svg" alt="Menu">
                       </a>
                       <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#" onClick=deleteUser(' . $id . ')>Delete User</a>
+                        <a class="dropdown-item" href="#" onClick=deleteUser(' . $id . ')>Remove User</a>
                       </div>
                     </div>
                   </td>';
@@ -291,7 +290,7 @@
                   <td>
                     <div class="form-box">
                       <label for="email">Email</label>
-                      <input type="email" name="email">
+                      <input type="email" name="email" disabled>
                     </div>
                   </td>
                 </tr>
@@ -311,7 +310,7 @@
 
                 <tr>
                   <td>
-                    <button type="submit" name="submitEdit" onclick="editUser()" class="btn btn__fullwidth btn__primary">Edit User</button>
+                    <button type="submit" name="submitEdit" onclick="editUser()" class="btn btn__fullwidth btn__primary">Save Changes</button>
                     <!-- <button type="button" class="btn btn__fullwidth btn__primary" data-toggle="modal" data-target="#successModal">Add User</button> -->
                   </td>
                 </tr>

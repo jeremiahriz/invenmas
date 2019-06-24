@@ -29,7 +29,6 @@
         </div>
         <div class="dropdown">
           <div class="dropdown-toggle header__primary--items" data-toggle="dropdown">
-            <img src="./images/search.svg" alt="search" width="24px">
             <span>
               <?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?></span>
             <?php
@@ -94,6 +93,10 @@
         </form>
       </div>
     </section>
+
+    <button type="button" id="showItemModal" style='display: none' data-toggle="modal" data-target="#myModal">
+      Open modal
+    </button>
 
     <!-- The Modal -->
     <div class="modal" id="myModal">

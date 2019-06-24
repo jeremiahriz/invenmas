@@ -23,9 +23,9 @@
   $conn = OpenCon();
 
   $sql = $conn->prepare(
-    "SELECT * FROM items WHERE u_id = ?"
+    "SELECT * FROM items"
   );
-  $sql->execute(array($u_id));
+  $sql->execute();
   $rows = $sql->fetchAll();
 
   if (isset($_POST['low_qty'])) {
@@ -94,7 +94,6 @@
         </div>
         <div class="dropdown">
           <div class="dropdown-toggle header__primary--items" data-toggle="dropdown">
-            <img src="./images/search.svg" alt="search" width="24px">
             <span>
               <?php echo $_SESSION['firstname'] . ' ' . $_SESSION['lastname']; ?></span>
             <?php
@@ -139,7 +138,9 @@
         </div>
 
         <div>
-          <a href="javascript:void(0)" class="btn__primary btn btn__primary--add">Print Report</a>
+          <form action="print.php" method="POST">
+            <button name='print' type="submit" class="btn__primary btn btn__primary--add">Print Report</button>
+          </form>
         </div>
       </section>
     </section>
@@ -180,7 +181,7 @@
                 <h2><?php
                     $total = 0;
                     foreach ($rows as $row) {
-                      if ($row['quantity'] < $row['min_quantity']) $total++;
+                      if ($row['quantity'] <= $row['min_quantity']) $total++;
                     }
                     echo $total;
                     ?></h2>
@@ -220,6 +221,18 @@
 
     <section class="main__section">
       <div class="table__card">
+        <div class="table__title">
+          <h2 class="table__title--h4"><?php if (isset($_POST['low_qty'])) echo 'Low Quantity';
+                                        else if (isset($_POST['over_stocked'])) echo 'Over Stocked';
+                                        else if (isset($_POST['out_stock'])) echo 'Out of Stock';
+                                        else if (isset($_POST['in_stock'])) echo 'In Stock Items';
+                                        else echo 'Total Items'; ?></h2>
+          <div>
+            <a href="javascript:void(0)" class="table__title--a"><img src="./images/search.svg" alt="search"></a>
+            <a href="javascript:void(0)" class="table__title--a"><img src="./images/sort.svg" alt="sort"></a>
+            <a href="javascript:void(0)" class="table__title--a"><img width="24px" src="./images/filter.svg" alt="filter"></a>
+          </div>
+        </div>
         <table class="table__card--table">
           <thead class="table__card--thead">
             <th class="table__card--th">SKU</th>

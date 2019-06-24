@@ -4,27 +4,15 @@ $(() => {
     e.preventDefault();
     console.log(document.activeElement)
   });
-  $('#uploadPicture input').change(function () {
-    alert("A file has been selected.");
+  $('#newUploadInput').change(e => {
+    addImage(e.target.files[0])
   });
 })
 
 var editUserID = null
 
 function showNewUpload() {
-  console.log(document.getElementById('newUploadInput'))
   document.getElementById('newUploadInput').focus()
-}
-
-function showEdit(index) {
-  editUserID = index
-  getUser(index).then(resp => {
-    resp = JSON.parse(resp)
-    $('#editUser input[name = "firstname"]').val(resp.firstname)
-    $('#editUser input[name = "lastname"]').val(resp.lastname)
-    $('#editUser input[name = "email"]').val(resp.email)
-    $('#editUser select[name = "role"]').val(resp.role).change()
-  })
 }
 
 function reduce(index) {
@@ -44,6 +32,24 @@ function add(index) {
     data: { id: index }
   }).done(msg => {
     location.reload();
+  });
+}
+
+function addImage(image) {
+  console.log(image)
+  let fData = new FormData();
+  fData.append('newImage', image);
+  $.ajax({
+    type: "POST",
+    url: "./addImage.php",
+    enctype: 'multipart/form-data',
+    processData: false,
+    contentType: false,
+    cache: false,
+    data: fData
+  }).done(msg => {
+    if (msg) alert(msg)
+    else location.reload();
   });
 }
 
@@ -79,21 +85,27 @@ function getUser(index) {
   });
 }
 
+function setUser(index) {
+  editUserID = index
+  let respo = getUser(index).then(resp => {
+    console.log(resp)
+    resp = JSON.parse(resp)
+    $('#editUser input[name = "firstname"]').val(resp['firstname'])
+    $('#editUser input[name = "lastname"]').val(resp['lastname'])
+    $('#editUser input[name = "email"]').val(resp['email'])
+    $('#editUser select[name = "role"]').val(resp['role']).change()
+  })
+}
+
 function addUser() {
-  complete = false
   const data = $('#addNewUser').serializeArray();
   let obj = {}
+  let values = []
   data.forEach(element => {
-    if (!element.value) {
-      complete = false
-      alert("All fields are required")
-    }
-    else {
-      obj[element.name] = element.value
-      complete = true
-    }
+    obj[element.name] = element.value
+    if (element.value) values.push(element.value)
   });
-  if (complete) {
+  if (Object.keys(obj).length === values.length) {
     $.ajax({
       type: "POST",
       url: "./addUser.php",
@@ -107,28 +119,25 @@ function addUser() {
 }
 
 function editUser() {
-  complete = false
   const data = $('#editUser').serializeArray();
   let obj = {}
+  let values = []
   data.forEach(element => {
-    if (!element.value) {
-      complete = false
-      alert("All fields are required")
-    }
-    else {
-      obj[element.name] = element.value
-      complete = true
-    }
+    obj[element.name] = element.value
+    if (element.value) values.push(element.value)
   });
-  obj['id'] = editUserID
-  if (complete) {
+  if (Object.keys(obj).length === values.length) {
+    obj['id'] = editUserID
     $.ajax({
       type: "POST",
       url: "./editUser.php",
       data: obj
     }).done(msg => {
       if (msg) alert(msg)
-      location.reload();
+      else {
+        alert("Changes saved successfully")
+        location.reload();
+      }
     });
   }
 }
@@ -147,7 +156,6 @@ function setItem(index) {
   editUserID = index
   getItem(index).then(resp => {
     resp = JSON.parse(resp)
-    console.log(resp)
     $('#editItemSKU').text(resp.sku)
     $('#editItem input[name = "editname"]').val(resp.name)
     $('#editItem input[name = "edittag"]').val(resp.tag)
@@ -158,21 +166,15 @@ function setItem(index) {
 }
 
 function editItem() {
-  complete = false
   const data = $('#editItem').serializeArray();
   let obj = {}
+  let values = []
   data.forEach(element => {
-    if (!element.value) {
-      complete = false
-      alert("All fields are required")
-    }
-    else {
-      obj[element.name] = element.value
-      complete = true
-    }
+    obj[element.name] = element.value
+    if (element.value) values.push(element.value)
   });
-  obj['id'] = editUserID
-  if (complete) {
+  if (Object.keys(obj).length === values.length) {
+    obj['id'] = editUserID
     $.ajax({
       type: "POST",
       url: "./editItem.php",
@@ -186,31 +188,28 @@ function editItem() {
 
 
 function addNewItem() {
-  let complete = false
   const data = $('#addNewItem').serializeArray();
   let obj = {}
+  let values = []
   data.forEach(element => {
-    if (!element.value) {
-      complete = false
-      alert("All fields are required")
-    }
-    else {
-      obj[element.name] = element.value
-      complete = true
-    }
+    obj[element.name] = element.value
+    if (element.value) values.push(element.value)
   });
-  if (complete) {
+  if (Object.keys(obj).length === values.length) {
     $.ajax({
       type: "POST",
       url: "./newItem.php",
       data: obj
     }).done(msg => {
-      if (msg) {
+      if (msg == 'success') {
         $('#showItemModal').click();
       }
       else {
         alert('There was an error adding your item')
       }
     });
+  }
+  else {
+    alert("All fields are required")
   }
 }
