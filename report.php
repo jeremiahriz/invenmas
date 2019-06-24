@@ -35,7 +35,7 @@
     foreach ($result as $row) {
       $arr2 = [];
       if ($row['quantity'] <= $row['min_quantity']) {
-        array_push($arr2, $row['sku'], $row['name'], $row['quantity'], $row['tag']);
+        array_push($arr2, $row['sku'], $row['name'], $row['quantity'], $row['tag'], $row['max_quantity']);
         array_push($items, $arr2);
       }
     }
@@ -47,7 +47,7 @@
     foreach ($result as $row) {
       $arr2 = [];
       if ($row['quantity'] > $row['max_quantity']) {
-        array_push($arr2, $row['sku'], $row['name'], $row['quantity'], $row['tag']);
+        array_push($arr2, $row['sku'], $row['name'], $row['quantity'], $row['tag'], $row['max_quantity']);
         array_push($items, $arr2);
       }
     }
@@ -59,7 +59,7 @@
     foreach ($result as $row) {
       $arr2 = [];
       if ($row['quantity'] == 0) {
-        array_push($arr2, $row['sku'], $row['name'], $row['quantity'], $row['tag']);
+        array_push($arr2, $row['sku'], $row['name'], $row['quantity'], $row['tag'], $row['max_quantity']);
         array_push($items, $arr2);
       }
     }
@@ -75,10 +75,16 @@
 
     foreach ($result as $row) {
       $arr2 = [];
-      array_push($arr2, $row['sku'], $row['name'], $row['quantity'], $row['tag']);
+      array_push($arr2, $row['sku'], $row['name'], $row['quantity'], $row['tag'], $row['max_quantity']);
       array_push($arr, $arr2);
     }
     return $arr;
+  }
+
+  function reOrder($qty, $max)
+  {
+    if ($max >= $qty) return $max - $qty;
+    return 0;
   }
 
   if (isset($_POST['logout'])) {
@@ -227,11 +233,11 @@
                                         else if (isset($_POST['out_stock'])) echo 'Out of Stock';
                                         else if (isset($_POST['in_stock'])) echo 'In Stock Items';
                                         else echo 'Total Items'; ?></h2>
-          <div>
+          <!-- <div>
             <a href="javascript:void(0)" class="table__title--a"><img src="./images/search.svg" alt="search"></a>
             <a href="javascript:void(0)" class="table__title--a"><img src="./images/sort.svg" alt="sort"></a>
             <a href="javascript:void(0)" class="table__title--a"><img width="24px" src="./images/filter.svg" alt="filter"></a>
-          </div>
+          </div> -->
         </div>
         <table class="table__card--table">
           <thead class="table__card--thead">
@@ -250,7 +256,7 @@
               echo '<td class="table__card--td">' . $row[1] . '</td>';
               echo '<td class="table__card--td">' . $row[2] . '</td>';
               echo '<td class="table__card--td">' . $row[3] . '</td>';
-              echo '<td class="table__card--td"></td>';
+              echo '<td class="table__card--td">' . reOrder($row[2], $row[4]) . '</td>';
               echo '</tr>';
             }
             ?>

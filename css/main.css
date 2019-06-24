@@ -359,10 +359,47 @@ h6,
   flex-direction: row;
   padding-top: .5rem;
   padding-bottom: 1.5rem;
+  align-items: center
 }
 
-.table__title--a:not(:last-child) {
-  margin-right: 20px
+.table__form {
+  float: left;
+}
+
+.table__form input {
+  border: 1px solid transparent;
+  border-radius: 50px
+}
+
+.table__form--div {
+  display: flex;
+  border: 1px solid transparent;
+  border-radius: 0px;
+  width: 0%;
+  opacity: 0;
+}
+
+.table__form--div.active {
+  transition: 200ms ease-in-out;
+  border-radius: 30px;
+  width: 100%;
+  opacity: 1;
+  border: 1px solid #4d4d4d;
+}
+
+#search-icon {
+  opacity: 0;
+  width: 0
+}
+
+#search-icon.active {
+  opacity: 1;
+  width: auto;
+  transition: 200ms
+}
+
+.table__title--a {
+  margin-left: 20px
 }
 
 /* add item */

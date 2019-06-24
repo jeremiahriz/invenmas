@@ -25,6 +25,12 @@
     header('Location: index.php');
   }
 
+  $sql = $conn->prepare(
+    "SELECT * FROM items"
+  );
+  $sql->execute(array($u_id));
+  $rows = $sql->fetchAll();
+
   ?>
   <main>
     <header class="header__primary">
@@ -87,8 +93,14 @@
       <div class="table__card">
         <div class="table__title">
           <h2 class="table__title--h4">Inventory</h2>
-          <div>
-            <a href="javascript:void(0)" class="table__title--a"><img src="./images/search.svg" alt="search"></a>
+          <div class="d-flex align-items-center">
+            <form method="GET" class="table__form" id="search-form">
+              <div class="table__form--div">
+                <input type="text" name="query" onkeyup="search()" />
+                <button class="btn"><img src="./images/search.svg" alt="search"></button>
+              </div>
+            </form>
+            <a href="javascript:void(0)" class="table__title--a active" id="search-icon"><img src="./images/search.svg" alt="search"></a>
             <a href="javascript:void(0)" class="table__title--a"><img src="./images/sort.svg" alt="sort"></a>
             <a href="javascript:void(0)" class="table__title--a"><img width="24px" src="./images/filter.svg" alt="filter"></a>
           </div>
@@ -102,25 +114,20 @@
             <th class="table__card--th">Action</th>
           </thead>
 
-          <tbody>
+          <tbody id="show__tbody">
             <?php
-
-            $sql = $conn->prepare(
-              "SELECT * FROM items"
-            );
-            $sql->execute(array($u_id));
-            $rows = $sql->fetchAll();
+            $count = 0;
             foreach ($rows as $row) {
               $id = $row['id'];
               echo '<tr class="table__card--tr">';
               echo '<td class="table__card--td">' . $row['sku'] . '</td>';
               echo '<td class="table__card--td">' . $row['name'] . '</td>';
-              echo '<td class="table__card--td">' . $row['quantity'] . '</td>';
+              echo '<td class="table__card--td table__td--qty">' . $row['quantity'] . '</td>';
               echo '<td class="table__card--td">' . $row['tag'] . '</td>';
               echo '
               <td class="table__card--td">
-                <button class="btn btn__accent show--reduce" onClick="reduce(' . $id . ')">Reduce</button>
-                <button class="btn btn__primary" onClick="add(' . $id . ')">Add</button>
+                <button class="btn btn__accent show--reduce" onClick="reduce(' . $id . ', ' . $count . ')">Reduce</button>
+                <button class="btn btn__primary" onClick="add(' . $id . ', ' . $count .  ')">Add</button>
                 <div class="dropdown">
                   <a class="dropdown-toggle" data-toggle="dropdown">
                     <img src="./images/menu.svg" alt="Menu">
@@ -131,6 +138,7 @@
                 </div>
               </td>';
               echo '</tr>';
+              $count += 1;
             }
             ?>
           </tbody>

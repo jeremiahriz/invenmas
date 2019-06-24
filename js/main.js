@@ -7,6 +7,10 @@ $(() => {
   $('#newUploadInput').change(e => {
     addImage(e.target.files[0])
   });
+  $('#search-icon').click(function () {
+    $(this).removeClass('active')
+    $('.table__form--div').addClass('active')
+  })
 })
 
 var editUserID = null
@@ -15,23 +19,35 @@ function showNewUpload() {
   document.getElementById('newUploadInput').focus()
 }
 
-function reduce(index) {
+function search() {
+  const query = $('#search-form input').val();
   $.ajax({
     type: "GET",
-    url: "./reduce.php",
-    data: { id: index }
+    url: "./search.php",
+    data: { query: query }
   }).done(msg => {
-    location.reload();
+    $('#show__tbody').html(msg)
   });
 }
 
-function add(index) {
+function reduce(id, index) {
+  $.ajax({
+    type: "GET",
+    url: "./reduce.php",
+    data: { id: id }
+  }).done(msg => {
+    console.log(msg)
+    $(`.table__td--qty:eq(${index})`).text(msg)
+  });
+}
+
+function add(id, index) {
   $.ajax({
     type: "GET",
     url: "./add.php",
-    data: { id: index }
+    data: { id: id }
   }).done(msg => {
-    location.reload();
+    $(`.table__td--qty:eq(${index})`).text(msg)
   });
 }
 

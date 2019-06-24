@@ -20,5 +20,5 @@ if ($rows['quantity'] > 0) {
   $output = 'Insufficient Quantity';
 }
 // }
-echo $output;
+echo $new_qty;
 CloseCon($conn);
