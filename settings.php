@@ -225,7 +225,7 @@
 
     <footer class="footer__white">
       <div class="main__section">
-        <h6>All Rights Reserved | About | Help | Feedback | built by <strong>Jeremiah Righteous</strong></h6>
+        <h6>All Rights Reserved  |  Built by <strong>Jeremiah Righteous</strong></h6>
       </div>
     </footer>
 

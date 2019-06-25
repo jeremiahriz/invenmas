@@ -175,7 +175,7 @@
                     if (count($rows) <= 0) echo 0;
                     else echo count($rows);
                     ?></h2>
-                <span class="additem__card--label">TOTAL ITEMS</span>
+                <span class="additem__card--label">TOTAL STOCKS</span>
               </div>
             </button>
             <img src="./images/hr.svg" alt="Horizontal Line">
@@ -190,7 +190,7 @@
                     }
                     echo $total;
                     ?></h2>
-                <span class="additem__card--label">AVG STOCK</span>
+                <span class="additem__card--label">AVERAGE STOCKS</span>
               </div>
             </button>
             <img src="./images/hr.svg" alt="Horizontal Line">
@@ -203,7 +203,7 @@
                     }
                     echo $total;
                     ?></h2>
-                <span class="additem__card--label">LOW QTY STOCK</span>
+                <span class="additem__card--label">UNDERSTOCKS</span>
               </div>
             </button>
             <img src="./images/hr.svg" alt="Horizontal Line">
@@ -216,7 +216,7 @@
                     }
                     echo $total;
                     ?></h2>
-                <span class="additem__card--label">OUT OF STOCK</span>
+                <span class="additem__card--label">OUT-OF-STOCKS</span>
               </div>
             </button>
             <img src="./images/hr.svg" alt="Horizontal Line">
@@ -229,7 +229,7 @@
                     }
                     echo $total;
                     ?></h2>
-                <span class="additem__card--label">OVERSTOCKED</span>
+                <span class="additem__card--label">OVERSTOCKS</span>
               </div>
             </button>
           </div>
@@ -240,11 +240,11 @@
     <section class="main__section">
       <div class="table__card">
         <div class="table__title">
-          <h2 class="table__title--h4"><?php if (isset($_POST['low_qty'])) echo 'Low Quantity';
-                                        else if (isset($_POST['over_stocked'])) echo 'Over Stocked';
-                                        else if (isset($_POST['out_stock'])) echo 'Out of Stock';
+          <h2 class="table__title--h4"><?php if (isset($_POST['low_qty'])) echo 'Understock Items';
+                                        else if (isset($_POST['over_stocked'])) echo 'OverStock Items';
+                                        else if (isset($_POST['out_stock'])) echo 'Out-of-Stock Items';
                                         else if (isset($_POST['in_stock'])) echo 'Average Stock Items';
-                                        else echo 'Total Items'; ?></h2>
+                                        else echo 'Total Stock Items'; ?></h2>
           <div>
             <!-- <a href="javascript:void(0)" class="table__title--a"><img src="./images/search.svg" alt="search"></a> -->
             <a href="javascript:void(0)" class="table__title--a"><img src="./images/sort.svg" alt="sort"></a>
@@ -257,7 +257,7 @@
             <th class="table__card--th">Item Description</th>
             <th class="table__card--th">Quantity</th>
             <th class="table__card--th">Tag</th>
-            <th class="table__card--th">Reorder Quantities</th>
+            <th class="table__card--th">Reorder Quantity</th>
           </thead>
 
           <tbody>
@@ -285,7 +285,7 @@
 
     <footer class="footer__white">
       <div class="main__section">
-        <h6>All Rights Reserved | About | Help | Feedback | built by <strong>Jeremiah Righteous</strong></h6>
+        <h6>All Rights Reserved | Built by <strong>Jeremiah Righteous</strong></h6>
       </div>
     </footer>
 

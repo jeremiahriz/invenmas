@@ -72,12 +72,13 @@
             </li>
           </ul>
         </div>
-
+<!---
         <div>
           <form action="print.php" method="POST">
             <button name='print' type="submit" class="btn__primary btn btn__primary--add">Print Report</button>
           </form>
         </div>
+-->
       </section>
     </section>
 
@@ -126,7 +127,7 @@
 
     <footer class="footer__white">
       <div class="main__section">
-        <h6>All Rights Reserved | About | Help | Feedback | built by <strong>Jeremiah Righteous</strong></h6>
+        <h6>All Rights Reserved | Built by <strong>Jeremiah Righteous</strong></h6>
       </div>
     </footer>
 
