@@ -36,7 +36,7 @@
               echo '<img class="img__avatar" src="data:image/png;base64,' . base64_encode($_SESSION['image']) . '" alt="' . $_SESSION['firstname'] . '" width="44px" height="44px">';
             } else {
               echo '
-            <img class="img__avatar" src="./images/avatar.png" alt="' . $_SESSION['firstname'] . '" width="44px">';
+            <img class="img__avatar" src="./images/avatar.jpg" alt="' . $_SESSION['firstname'] . '" width="44px">';
             }
             ?>
           </div>

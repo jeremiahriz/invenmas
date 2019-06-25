@@ -34,7 +34,19 @@
     $result = $sql->fetchAll();
     foreach ($result as $row) {
       $arr2 = [];
-      if ($row['quantity'] <= $row['min_quantity']) {
+      if ($row['quantity'] <= $row['min_quantity'] && $row['quantity'] != 0) {
+        array_push($arr2, $row['sku'], $row['name'], $row['quantity'], $row['tag'], $row['max_quantity']);
+        array_push($items, $arr2);
+      }
+    }
+  } else 
+  if (isset($_POST['in_stock'])) {
+    $items = [];
+    $sql->execute(array($u_id));
+    $result = $sql->fetchAll();
+    foreach ($result as $row) {
+      $arr2 = [];
+      if ($row['quantity'] <= $row['max_quantity'] && $row['quantity'] >= $row['min_quantity']) {
         array_push($arr2, $row['sku'], $row['name'], $row['quantity'], $row['tag'], $row['max_quantity']);
         array_push($items, $arr2);
       }
@@ -107,7 +119,7 @@
               echo '<img class="img__avatar" src="data:image/png;base64,' . base64_encode($_SESSION['image']) . '" alt="' . $_SESSION['firstname'] . '" width="44px" height="44px">';
             } else {
               echo '
-            <img class="img__avatar" src="./images/avatar.png" alt="' . $_SESSION['firstname'] . '" width="44px">';
+            <img class="img__avatar" src="./images/avatar.jpg" alt="' . $_SESSION['firstname'] . '" width="44px">';
             }
             ?>
           </div>
@@ -163,7 +175,7 @@
                     if (count($rows) <= 0) echo 0;
                     else echo count($rows);
                     ?></h2>
-                <label class="additem__card--label">TOTAL ITEMS</label>
+                <span class="additem__card--label">TOTAL ITEMS</span>
               </div>
             </button>
             <img src="./images/hr.svg" alt="Horizontal Line">
@@ -172,13 +184,13 @@
                 <h2><?php
                     $total = 0;
                     foreach ($rows as $row) {
-                      if ($row['quantity'] > 0) {
+                      if ($row['quantity'] >= $row['min_quantity'] && $row['quantity'] <= $row['max_quantity']) {
                         $total++;
                       }
                     }
                     echo $total;
                     ?></h2>
-                <label class="additem__card--label">IN STOCK</label>
+                <span class="additem__card--label">AVG STOCK</span>
               </div>
             </button>
             <img src="./images/hr.svg" alt="Horizontal Line">
@@ -187,11 +199,11 @@
                 <h2><?php
                     $total = 0;
                     foreach ($rows as $row) {
-                      if ($row['quantity'] <= $row['min_quantity']) $total++;
+                      if ($row['quantity'] <= $row['min_quantity'] && $row['quantity'] != 0) $total++;
                     }
                     echo $total;
                     ?></h2>
-                <label class="additem__card--label">LOW QTY STOCK</label>
+                <span class="additem__card--label">LOW QTY STOCK</span>
               </div>
             </button>
             <img src="./images/hr.svg" alt="Horizontal Line">
@@ -204,7 +216,7 @@
                     }
                     echo $total;
                     ?></h2>
-                <label class="additem__card--label">OUT OF STOCK</label>
+                <span class="additem__card--label">OUT OF STOCK</span>
               </div>
             </button>
             <img src="./images/hr.svg" alt="Horizontal Line">
@@ -217,7 +229,7 @@
                     }
                     echo $total;
                     ?></h2>
-                <label class="additem__card--label">OVERSTOCKED</label>
+                <span class="additem__card--label">OVERSTOCKED</span>
               </div>
             </button>
           </div>
@@ -231,13 +243,13 @@
           <h2 class="table__title--h4"><?php if (isset($_POST['low_qty'])) echo 'Low Quantity';
                                         else if (isset($_POST['over_stocked'])) echo 'Over Stocked';
                                         else if (isset($_POST['out_stock'])) echo 'Out of Stock';
-                                        else if (isset($_POST['in_stock'])) echo 'In Stock Items';
+                                        else if (isset($_POST['in_stock'])) echo 'Average Stock Items';
                                         else echo 'Total Items'; ?></h2>
-          <!-- <div>
-            <a href="javascript:void(0)" class="table__title--a"><img src="./images/search.svg" alt="search"></a>
+          <div>
+            <!-- <a href="javascript:void(0)" class="table__title--a"><img src="./images/search.svg" alt="search"></a> -->
             <a href="javascript:void(0)" class="table__title--a"><img src="./images/sort.svg" alt="sort"></a>
             <a href="javascript:void(0)" class="table__title--a"><img width="24px" src="./images/filter.svg" alt="filter"></a>
-          </div> -->
+          </div>
         </div>
         <table class="table__card--table">
           <thead class="table__card--thead">

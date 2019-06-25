@@ -2,13 +2,13 @@ $(() => {
   $('[data-toggle="tooltip"]').tooltip();
   $('.stockitems').submit(e => {
     e.preventDefault();
-    console.log(document.activeElement)
   });
   $('#newUploadInput').change(e => {
     addImage(e.target.files[0])
   });
   $('#search-icon').click(function () {
     $(this).removeClass('active')
+    $('#search-form input').focus();
     $('.table__form--div').addClass('active')
   })
 })
@@ -36,7 +36,6 @@ function reduce(id, index) {
     url: "./reduce.php",
     data: { id: id }
   }).done(msg => {
-    console.log(msg)
     $(`.table__td--qty:eq(${index})`).text(msg)
   });
 }
@@ -52,7 +51,6 @@ function add(id, index) {
 }
 
 function addImage(image) {
-  console.log(image)
   let fData = new FormData();
   fData.append('newImage', image);
   $.ajax({
@@ -104,7 +102,6 @@ function getUser(index) {
 function setUser(index) {
   editUserID = index
   let respo = getUser(index).then(resp => {
-    console.log(resp)
     resp = JSON.parse(resp)
     $('#editUser input[name = "firstname"]').val(resp['firstname'])
     $('#editUser input[name = "lastname"]').val(resp['lastname'])
@@ -228,4 +225,15 @@ function addNewItem() {
   else {
     alert("All fields are required")
   }
+}
+
+function deleteItem(index) {
+  $.ajax({
+    type: "POST",
+    url: "./deleteItem.php",
+    data: { id: index }
+  }).done(msg => {
+    if (msg) alert(msg)
+    else location.reload();
+  });
 }

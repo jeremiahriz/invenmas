@@ -53,8 +53,8 @@ input {
   width: 100%
 }
 
-label {
-
+label,
+.additem__card--label {
   color: rgba(37, 56, 88, 0.5);
 }
 
@@ -368,6 +368,7 @@ h6,
 
 .table__form input {
   border: 1px solid transparent;
+  background: none;
   border-radius: 50px
 }
 

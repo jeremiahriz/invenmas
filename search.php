@@ -11,7 +11,7 @@ if (empty($query)) {
 } else {
 
   $sql = $conn->prepare("SELECT * FROM items
-      WHERE (`sku` LIKE '%" . $query . "%') OR (`name` LIKE '%" . $query . "%')");
+      WHERE (`sku` LIKE '%" . $query . "%') OR (`name` LIKE '%" . $query . "%') OR (`tag` LIKE '%" . $query . "%')");
 }
 
 $sql->execute();

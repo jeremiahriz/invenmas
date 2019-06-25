@@ -47,7 +47,7 @@
               echo '<img class="img__avatar" src="data:image/png;base64,' . base64_encode($_SESSION['image']) . '" alt="' . $_SESSION['firstname'] . '" width="44px" height="44px">';
             } else {
               echo '
-            <img class="img__avatar" src="./images/avatar.png" alt="' . $_SESSION['firstname'] . '" width="44px">';
+            <img class="img__avatar" src="./images/avatar.jpg" alt="' . $_SESSION['firstname'] . '" width="44px">';
             }
             ?>
           </div>
@@ -133,7 +133,8 @@
                     <img src="./images/menu.svg" alt="Menu">
                   </a>
                   <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#" onclick="setItem(' . $id . ')" data-toggle="modal" data-target="#editItemModal">Edit Item</a>
+                    <a class="dropdown-item mb-3" href="#" onclick="setItem(' . $id . ')" data-toggle="modal" data-target="#editItemModal">Edit Item</a>
+                    <a class="dropdown-item" href="#" onclick="deleteItem(' . $id . ')">Delete Item</a>
                   </div>
                 </div>
               </td>';

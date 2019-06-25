@@ -37,7 +37,7 @@
           "SELECT * FROM users WHERE email = ?"
         );
         $sql->execute(array($email));
-        $rows = $sql->fetch(PDO::FETCH_ASSOC);
+        $rows = $sql->fetch();
         if (count($rows['id']) > 0) {
           echo $email . ' is already in use';
         } else {
@@ -72,7 +72,7 @@
               echo '<img class="img__avatar" src="data:image/png;base64,' . base64_encode($_SESSION['image']) . '" alt="' . $_SESSION['firstname'] . '" width="44px" height="44px">';
             } else {
               echo '
-            <img class="img__avatar" src="./images/avatar.png" alt="' . $_SESSION['firstname'] . '" width="44px">';
+            <img class="img__avatar" src="./images/avatar.jpg" alt="' . $_SESSION['firstname'] . '" width="44px">';
             }
             ?>
           </div>
@@ -106,10 +106,6 @@
                 <img src="./images/settings.svg" alt="Settings">Settings</a>
             </li>
           </ul>
-        </div>
-
-        <div>
-          <a href="./add-item.php" class="btn__primary btn btn__primary--add">Add Item</a>
         </div>
       </section>
     </section>
@@ -160,10 +156,11 @@
                 );
                 $sql->execute(array($u_id));
                 $rows = $sql->fetchAll();
+                $count = 1;
                 foreach ($rows as $row) {
                   $id = $row['id'];
                   echo '<tr class="table__card--tr">';
-                  echo '<td class="table__card--td">1.</td>';
+                  echo '<td class="table__card--td">' . $count . '</td>';
                   echo '<td class="table__card--td">' . $row['firstname'] . ' ' . $row['lastname'] . '</td>';
                   echo '<td class="table__card--td">' . $row['email'] . '</td>';
                   echo '<td class="table__card--td">' . $row['role'] . '</td>';
@@ -180,6 +177,7 @@
                     </div>
                   </td>';
                   echo '</tr>';
+                  $count++;
                 }
                 ?>
               </tbody>

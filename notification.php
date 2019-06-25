@@ -37,7 +37,7 @@
               echo '<img class="img__avatar" src="data:image/png;base64,' . base64_encode($_SESSION['image']) . '" alt="' . $_SESSION['firstname'] . '" width="44px" height="44px">';
             } else {
               echo '
-            <img class="img__avatar" src="./images/avatar.png" alt="' . $_SESSION['firstname'] . '" width="44px">';
+            <img class="img__avatar" src="./images/avatar.jpg" alt="' . $_SESSION['firstname'] . '" width="44px">';
             }
             ?>
           </div>
@@ -88,7 +88,7 @@
         <table class="not__card--table">
           <tr class="not__card--tr">
             <td class="not__card--td">
-              <img class="not__card--avatar" src="./images/avatar.png" alt="Avatar" width="32px">
+              <img class="not__card--avatar" src="./images/avatar.jpg" alt="Avatar" width="32px">
             </td>
             <td class="not__card--td">
               Jeremiah Righteous reduced 32 quanties from the item ABCZ12354.
@@ -99,7 +99,7 @@
           </tr>
           <tr class="not__card--tr">
             <td class="not__card--td">
-              <img class="not__card--avatar" src="./images/avatar.png" alt="Avatar" width="32px">
+              <img class="not__card--avatar" src="./images/avatar.jpg" alt="Avatar" width="32px">
             </td>
             <td class="not__card--td">
               Jeremiah Righteous reduced 32 quanties from the item ABCZ12354.
@@ -110,7 +110,7 @@
           </tr>
           <tr class="not__card--tr">
             <td class="not__card--td">
-              <img class="not__card--avatar" src="./images/avatar.png" alt="Avatar" width="32px">
+              <img class="not__card--avatar" src="./images/avatar.jpg" alt="Avatar" width="32px">
             </td>
             <td class="not__card--td">
               Jeremiah Righteous reduced 32 quanties from the item ABCZ12354.

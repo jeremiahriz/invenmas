@@ -79,7 +79,7 @@
               echo '<img class="img__avatar" src="data:image/png;base64,' . base64_encode($_SESSION['image']) . '" alt="' . $_SESSION['firstname'] . '" width="44px" height="44px">';
             } else {
               echo '
-            <img class="img__avatar" src="./images/avatar.png" alt="' . $_SESSION['firstname'] . '" width="44px">';
+            <img class="img__avatar" src="./images/avatar.jpg" alt="' . $_SESSION['firstname'] . '" width="44px">';
             }
             ?>
           </div>
@@ -113,10 +113,6 @@
                 <img src="./images/settings.svg" alt="Settings">Settings</a>
             </li>
           </ul>
-        </div>
-
-        <div>
-          <a href="./add-item.php" class="btn__primary btn btn__primary--add">Add Item</a>
         </div>
       </section>
     </section>
@@ -209,7 +205,7 @@
                     echo '<img class="img__avatar" src="data:image/png;base64,' . base64_encode($_SESSION['image']) . '" alt="' . $_SESSION['firstname'] . '" width="100px" height="100px">';
                   } else {
                     echo '
-                  <img class="img__avatar" src="./images/avatar.png" alt="' . $_SESSION['firstname'] . '" width="100px">';
+                  <img class="img__avatar" src="./images/avatar.jpg" alt="' . $_SESSION['firstname'] . '" width="100px">';
                   }
                   ?>
                   <div class="user__innerdiv mt-3">
@@ -220,9 +216,6 @@
                     </form>
                     <?php if (!empty($_SESSION['image'])) echo '<button type="button" class="btn btn__delete" onclick="deleteImage(' . $_SESSION['id'] . ')">Delete</button>'; ?>
                   </div>
-                </div>
-                <div class="user__innerdiv">
-                  <a>Change Password</a>
                 </div>
             </section>
           </div>

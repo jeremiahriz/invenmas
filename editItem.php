@@ -8,7 +8,7 @@ $tag = $_REQUEST['edittag'];
 $min_qty = $_REQUEST['editminquantity'];
 $max_qty = $_REQUEST['editmaxquantity'];
 try {
-  if (!empty($name) && !empty($quantity) && !empty($tag) && !empty($min_qty) && !empty($max_qty)) {
+  if (!empty($name) && !empty($tag) && !empty($min_qty) && !empty($max_qty)) {
     $sql = $conn->prepare(
       "UPDATE items SET `name` = ?, quantity = ?, tag = ?, min_quantity = ?, max_quantity = ? WHERE id = ?"
     );
